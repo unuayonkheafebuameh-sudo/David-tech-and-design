@@ -370,6 +370,8 @@ addEventListener("scroll", () => {
   ul.querySelectorAll("a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
 }, {passive:true});
 $("year").textContent = new Date().getFullYear();
+ }
+loadData().finally(startSite);
 </script>
 </body>
   </html>
