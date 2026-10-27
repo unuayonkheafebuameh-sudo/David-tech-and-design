@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David Tech and Design | Website Design, Graphic Design, Video Editing</title>
+<meta name="description" content="David Tech and Design offers website design, graphic design, video editing, typing and document services, and printing. Design That Speaks.">
+<meta property="og:title" content="David Tech and Design">
+<meta property="og:description" content="Creative Solutions. Digital Excellence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--navy:#14213D;--white:#fff;--blue:#3B82F6;--bg:#F8FAFC;--text:#334155;--line:#E2E8F0;
+--head:'Sora','Segoe UI',Arial,sans-serif;--body:'Source Sans 3','Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--body);color:var(--text);background:var(--bg);line-height:1.65;font-size:17px}
+h1,h2,h3{font-family:var(--head);color:var(--navy);line-height:1.2}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:12px}
+.lead{max-width:60ch;margin-bottom:36px}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;font:600 1rem var(--body);transition:background .2s,color .2s}
+.btn:hover{background:#2563EB;border-color:#2563EB}
+.btn.alt{background:transparent;color:#fff;border-color:#fff}
+.btn.alt:hover{background:#fff;color:var(--navy)}
+.btn.out{background:transparent;color:var(--blue)}
+.btn.out:hover{background:var(--blue);color:#fff}
+.btn.sm{padding:9px 18px;font-size:.95rem}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 1rem var(--head);text-decoration:none;color:#fff}
+nav ul{display:flex;gap:26px;list-style:none;padding:0}
+nav a{text-decoration:none;color:#cbd5e1;font-weight:600}
+nav a:hover,nav a.on{color:#fff}
+#menu{display:none;background:none;border:0;color:#fff;font-size:1.7rem;cursor:pointer}
+@media(max-width:760px){
+#menu{display:block}
+nav ul{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);flex-direction:column;gap:0;padding:8px 20px 16px}
+nav ul.open{display:flex}
+nav li a{display:block;padding:12px 0}}
+/* hero */
+.hero{background:var(--navy);color:#fff;padding:88px 0 96px}
+.hero .name{font:700 .95rem var(--head);color:#93C5FD;margin-bottom:18px}
+.hero h1{color:#fff;font-size:clamp(2.3rem,7vw,4.2rem);max-width:15ch;margin-bottom:20px}
+.hero p{max-width:56ch;color:#cbd5e1;font-size:1.15rem;margin-bottom:32px}
+.hero .row{display:flex;gap:14px;flex-wrap:wrap}
+/* about */
+.about{background:#fff}
+.about p{max-width:68ch;margin-bottom:16px}
+/* cards */
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column}
+.card:hover{border-color:var(--blue)}
+.card svg{width:30px;height:30px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px}
+.card h3{font-size:1.15rem;margin-bottom:8px}
+.card ul{margin:12px 0 20px 18px;font-size:.97rem}
+.card .btn{margin-top:auto;align-self:flex-start}
+/* portfolio */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.filters button{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font:600 .95rem var(--body);color:var(--navy);cursor:pointer}
+.filters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.proj{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.shot{aspect-ratio:4/3;background:#E2E8F0;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;color:#64748b;font-size:.95rem;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.proj .info{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.proj .info .btn{margin-top:auto;align-self:flex-start}
+.proj h3{font-size:1.05rem}
+.hide{display:none!important}
+/* why */
+.why{background:#fff}
+.why .card{background:var(--bg)}
+/* cta */
+.cta{background:var(--navy);color:#fff;text-align:center}
+.cta h2{color:#fff}
+.cta p{max-width:50ch;margin:0 auto 28px;color:#cbd5e1}
+/* contact */
+.cols{display:grid;gap:40px;grid-template-columns:1fr 1fr}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.list{list-style:none;padding:0;display:grid;gap:14px}
+.list b{display:block;color:var(--navy);font-family:var(--head);font-size:.95rem}
+.list a{color:var(--blue);font-weight:600}
+form{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;display:grid;gap:16px}
+label{font-weight:600;color:var(--navy);display:grid;gap:6px;font-size:.97rem}
+input,select,textarea{font:1rem var(--body);padding:12px;border:1px solid #CBD5E1;border-radius:10px;width:100%;background:#fff}
+textarea{min-height:110px;resize:vertical}
+.err{color:#B91C1C;font-size:.9rem;font-weight:400;min-height:1em}
+.msg{padding:12px;border-radius:10px;font-size:.95rem}
+.msg.ok{background:#DCFCE7;color:#14532D}
+.note{font-size:.88rem;color:#64748b}
+/* footer */
+footer{background:var(--navy);color:#cbd5e1;padding:48px 0 24px;font-size:.95rem}
+footer .fg{display:grid;gap:32px;grid-template-columns:2fr 1fr 1fr 1fr}
+@media(max-width:760px){footer .fg{grid-template-columns:1fr 1fr}footer .fg>div:first-child{grid-column:1/-1}}
+footer h4{font-family:var(--head);color:#fff;margin-bottom:10px;font-size:.95rem}
+footer ul{list-style:none;padding:0;display:grid;gap:6px}
+footer a{text-decoration:none}footer a:hover{color:#fff}
+footer .copy{border-top:1px solid #334155;margin-top:32px;padding-top:18px;font-size:.88rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="wrap nav">
+  <a class="logo" href="#home">DAVID TECH AND DESIGN</a>
+  <button id="menu" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  <nav aria-label="Main"><ul id="links">
+   <li><a href="#home">Home</a></li><li><a href="#about">About</a></li>
+   <li><a href="#services">Services</a></li><li><a href="#portfolio">Portfolio</a></li>
+   <li><a href="#contact">Contact</a></li>
+  </ul></nav>
+ </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+ <div class="wrap">
+  <p class="name">DAVID TECH AND DESIGN</p>
+  <h1>Creative Solutions. Digital Excellence.</h1>
+  <p>We help businesses, brands, and individuals present themselves professionally through creative designs, modern websites, and engaging video content.</p>
+  <div class="row">
+   <a class="btn" href="#services">Explore Our Services</a>
+   <a class="btn alt" href="#portfolio">View Our Work</a>
+  </div>
+ </div>
+</section>
+
+<section class="about" id="about">
+ <div class="wrap">
+  <h2>Who We Are</h2>
+  <p>David Tech and Design is a creative digital service business providing solutions that help individuals, businesses, and organizations communicate effectively, establish a professional presence, and bring their ideas to life.</p>
+  <p>From website development to graphic design and video editing, we focus on delivering creative solutions tailored to each client's needs.</p>
+ </div>
+</section>
+
+<section id="services">
+ <div class="wrap">
+  <h2>What We Do</h2>
+  <p class="lead">Five services, each tailored to what you need.</p>
+  <div class="grid" id="serviceGrid"></div>
+ </div>
+</section>
+
+<section id="portfolio" style="background:#fff">
+ <div class="wrap">
+  <h2>Our Recent Works</h2>
+  <p class="lead">Explore selected projects that demonstrate our creativity and commitment to quality.</p>
+  <div class="filters" id="filters">
+   <button class="on" data-f="all">All Projects</button>
+   <button data-f="Websites">Websites</button>
+   <button data-f="Graphic Design">Graphic Design</button>
+   <button data-f="Video Editing">Video Editing</button>
+  </div>
+  <div class="grid" id="projGrid"></div>
+ </div>
+</section>
+
+<section class="why">
+ <div class="wrap">
+  <h2>Why Work With Us?</h2>
+  <p class="lead">What you can expect when we work together.</p>
+  <div class="grid" id="whyGrid"></div>
+ </div>
+</section>
+
+<section class="cta">
+ <div class="wrap">
+  <h2>Let's Bring Your Ideas to Life.</h2>
+  <p>Have a project in mind? Let's discuss your needs and find the right creative solution for you.</p>
+  <a class="btn" id="startBtn" href="#" target="_blank" rel="noopener noreferrer">Start a Project</a>
+ </div>
+</section>
+
+<section id="contact">
+ <div class="wrap">
+  <h2>Get In Touch</h2>
+  <p class="lead">Message us on WhatsApp, call, or send your project details below.</p>
+  <div class="cols">
+   <ul class="list" id="contactList"></ul>
+   <form id="form" novalidate>
+    <label>Full Name<input id="fName" autocomplete="name" required><span class="err" id="eName"></span></label>
+    <label>Email or Phone Number<input id="fContact" autocomplete="off" required><span class="err" id="eContact"></span></label>
+    <label>Service Required<select id="fService" required></select><span class="err" id="eService"></span></label>
+    <label>Project Description<textarea id="fDesc" required></textarea><span class="err" id="eDesc"></span></label>
+    <button class="btn" type="submit">Send via WhatsApp</button>
+    <div id="result" role="status"></div>
+    <p class="note">This form has no email backend. Submitting opens WhatsApp with your details filled in, so you can send them to us directly.</p>
+   </form>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">
+  <div class="fg">
+   <div><h4>DAVID TECH AND DESIGN</h4><p>Design That Speaks.</p></div>
+   <div><h4>Navigate</h4><ul>
+    <li><a href="#home">Home</a></li><li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li><li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li></ul></div>
+   <div><h4>Services</h4><ul id="footServices"></ul></div>
+   <div><h4>Social</h4><ul id="footSocial"></ul></div>
+  </div>
+  <p class="copy">&copy; <span id="year"></span> David Tech and Design. All rights reserved.</p>
+ </div>
+</footer>
+
+<script>
+/* ============ EDIT YOUR DETAILS HERE ============ */
+const CONFIG = {
+  whatsapp: "2348100133172",            // international format, digits only
+  phones: ["08100133172", "08123998568"],
+  email: "davidtechanddesigns@gmail.com",
+  instagram: "dtd017",
+  instagramUrl: "https://instagram.com/dtd017",
+  facebook: "Davud Designs",            // check spelling
+  facebookUrl: "",                      // paste your Facebook page link here when you have it
+};
+
+const SERVICES = [
+  {name:"Website Design", icon:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/>',
+   desc:"We design modern, responsive websites that help businesses showcase their services and establish a professional online presence.",
+   items:["Business websites","Restaurant and hotel websites","School websites","E-commerce websites","Website redesign","And much more..."]},
+  {name:"Graphic Design", icon:'<path d="M12 20l8-8-4-4-8 8v4z"/><path d="M14 6l4 4"/>',
+   desc:"Eye-catching designs that give your brand a clear and professional look.", /* edit this text */
+   items:["Logos","Flyers and posters","Brand materials"]},
+  {name:"Video Editing", icon:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>',
+   desc:"We transform raw footage into engaging videos that communicate your message and capture attention.",
+   items:["Promotional videos","Event and conference videos","Business advertisement videos","Social media video content","Cinematic video editing"]},
+  {name:"Typing and Document Services", icon:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
+   desc:"We help individuals and businesses prepare clear, properly arranged, and professionally formatted documents.",
+   items:["Document typing","Document formatting","Professional document arrangement"]},
+  {name:"Printing Services", icon:'<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',
+   desc:"Printing solutions for documents and other suitable materials, with attention to clarity and presentation.", items:[]}
+];
+
+/* image: leave "" to use an automatic screenshot, or set e.g. "images/dejoe.jpg" */
+const PROJECTS = [
+  {title:"De-Joe Hotel & Resort", cat:"Websites", url:"https://dejoehotelresort.unuayonkheafebuameh.workers.dev/", image:"", desc:"Website design project for a hotel and resort."},
+  {title:"Castillo Kitchen", cat:"Websites", url:"https://castillo-kitchen-connectt.preciouajosh.workers.dev/", image:"", desc:"Website design project for a restaurant."},
+  {title:"Islah Kitchen", cat:"Websites", url:"https://islah-kitchen-web.unuayonkheafebuameh.workers.dev/", image:"", desc:"Website design project for a kitchen business."},
+  {title:"MJ Essentials Hub", cat:"Websites", url:"https://mj-essentials-hub.preciouajosh.workers.dev/", image:"", desc:"E-commerce style website design project."},
+  {title:"Pixel Match Studio", cat:"Websites", url:"https://pixel-match-studio-17.lovable.app/", image:"", desc:"Website design project for a creative studio."},
+  /* To add your own: copy a line, set cat to "Graphic Design" or "Video Editing", and set image to your file. Leave url "" for no button. */
+  {title:"Graphic design sample", cat:"Graphic Design", url:"", image:"", desc:"Your design work will appear here."},
+  {title:"Video editing sample", cat:"Video Editing", url:"", image:"", desc:"Your video work will appear here."}
+];
+
+const WHY = [
+  ["Creative Approach","Thoughtful designs tailored to your needs."],
+  ["Professional Presentation","Solutions designed to present your business effectively."],
+  ["Attention to Detail","Careful consideration of layout, clarity, and quality."],
+  ["Client-Focused Service","Clear communication and solutions suited to your requirements."]
+];
+/* ================================================= */
+
+const $ = id => document.getElementById(id);
+const wa = text => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Services + select + footer
+$("serviceGrid").innerHTML = SERVICES.map(s => `
+ <article class="card">
+  <svg viewBox="0 0 24 24" aria-hidden="true">${s.icon}</svg>
+  <h3>${esc(s.name)}</h3><p>${esc(s.desc)}</p>
+  ${s.items.length ? `<ul>${s.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : '<div style="height:20px"></div>'}
+  <a class="btn out sm" href="#contact" data-service="${esc(s.name)}">Request This Service</a>
+ </article>`).join("");
+$("fService").innerHTML = '<option value="">Select a service</option>' +
+  SERVICES.map(s=>`<option>${esc(s.name)}</option>`).join("") + '<option>Other</option>';
+$("footServices").innerHTML = SERVICES.map(s=>`<li><a href="#services">${esc(s.name)}</a></li>`).join("");
+document.querySelectorAll("[data-service]").forEach(a => a.addEventListener("click", () => $("fService").value = a.dataset.service));
+
+// Portfolio
+const shotUrl = u => `https://image.thum.io/get/width/800/crop/600/noanimate/${u}`;
+const backupUrl = u => `https://s.wordpress.com/mshots/v1/${encodeURIComponent(u)}?w=800&h=600`;
+$("projGrid").innerHTML = PROJECTS.map((p,i) => {
+  const src = p.image || (p.url ? shotUrl(p.url) : "");
+  const img = src
+    ? `<img src="${esc(src)}" alt="Screenshot of the ${esc(p.title)} ${p.cat==='Websites'?'website homepage':'project'}" loading="lazy" data-i="${i}">`
+    : `<span>Preview coming soon</span>`;
+  const btn = p.url ? `<a class="btn sm" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">View Live Website</a>` : "";
+  return `<article class="proj" data-cat="${esc(p.cat)}"><div class="shot">${img}</div>
+   <div class="info"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>${btn}</div></article>`;
+}).join("");
+document.querySelectorAll(".shot img").forEach(img => img.addEventListener("error", () => {
+  const p = PROJECTS[img.dataset.i];
+  if (p.url && !img.dataset.tried) { img.dataset.tried = 1; img.src = backupUrl(p.url); }
+  else img.replaceWith(Object.assign(document.createElement("span"), {textContent:"Preview coming soon"}));
+}));
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#filters button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".proj").forEach(c => c.classList.toggle("hide", b.dataset.f !== "all" && c.dataset.cat !== b.dataset.f));
+});
+
+// Why
+$("whyGrid").innerHTML = WHY.map(w => `<div class="card"><h3>${w[0]}</h3><p>${w[1]}</p></div>`).join("");
+
+// Contact list + footer social
+const links = [
+  ["WhatsApp", CONFIG.phones[0], wa("Hello David Tech and Design, I'd like to discuss a project.")],
+  ["Phone", CONFIG.phones.join(" / "), "tel:" + CONFIG.phones[0]],
+  ["Email", CONFIG.email, "mailto:" + CONFIG.email],
+  ["Instagram", "@" + CONFIG.instagram, CONFIG.instagramUrl],
+  ["Facebook", CONFIG.facebook, CONFIG.facebookUrl]
+];
+$("contactList").innerHTML = links.map(l => `<li><b>${l[0]}</b>${l[2] ? `<a href="${esc(l[2])}" ${l[2].startsWith("http")?'target="_blank" rel="noopener noreferrer"':''}>${esc(l[1])}</a>` : esc(l[1])}</li>`).join("");
+$("footSocial").innerHTML = links.filter(l => l[2] && l[0] !== "Phone" && l[0] !== "Email")
+  .map(l => `<li><a href="${esc(l[2])}" target="_blank" rel="noopener noreferrer">${l[0]}</a></li>`).join("");
+$("startBtn").href = wa("Hello David Tech and Design, I have a project in mind.");
+
+// Form
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = {Name:$("fName").value.trim(), Contact:$("fContact").value.trim(), Service:$("fService").value, Desc:$("fDesc").value.trim()};
+  const rules = {Name:["eName","Please enter your full name."], Contact:["eContact","Please enter an email or phone number."],
+                 Service:["eService","Please choose a service."], Desc:["eDesc","Please describe your project."]};
+  let ok = true;
+  for (const k in rules) { const bad = !f[k]; $(rules[k][0]).textContent = bad ? rules[k][1] : ""; if (bad) ok = false; }
+  const r = $("result");
+  if (!ok) { r.className = "msg"; r.style.background = "#FEE2E2"; r.style.color = "#7F1D1D"; r.textContent = "Please fix the highlighted fields."; return; }
+  r.removeAttribute("style"); r.className = "msg ok";
+  r.textContent = "Opening WhatsApp with your details. Tap Send there to reach us.";
+  window.open(wa(`Hello David Tech and Design,\nName: ${f.Name}\nContact: ${f.Contact}\nService: ${f.Service}\nProject: ${f.Desc}`), "_blank", "noopener,noreferrer");
+});
+
+// Mobile menu + active link
+const menu = $("menu"), ul = $("links");
+menu.addEventListener("click", () => { const o = ul.classList.toggle("open"); menu.setAttribute("aria-expanded", o); });
+ul.addEventListener("click", e => { if (e.target.tagName === "A") { ul.classList.remove("open"); menu.setAttribute("aria-expanded", false); } });
+const secs = [...document.querySelectorAll("main section[id]")];
+addEventListener("scroll", () => {
+  const y = scrollY + 100; let cur = "home";
+  secs.forEach(s => { if (s.offsetTop <= y) cur = s.id; });
+  ul.querySelectorAll("a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
+}, {passive:true});
+$("year").textContent = new Date().getFullYear();
+</script>
+</body>
+  </html>
