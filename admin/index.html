@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | David Tech and Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--navy:#14213D;--blue:#3B82F6;--bg:#F8FAFC;--text:#334155;--muted:#64748b;--line:#E2E8F0;--red:#B91C1C;
+--head:'Sora','Segoe UI',Arial,sans-serif;--body:'Source Sans 3','Segoe UI',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+h1,h2,h3{font-family:var(--head);color:var(--navy);line-height:1.25}
+button,input,textarea,select{font:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.app{display:flex;min-height:100vh}
+
+/* sidebar */
+.side{width:250px;background:var(--navy);padding:26px 14px;flex-shrink:0;display:flex;flex-direction:column}
+.brand{padding:0 12px 26px;border-bottom:1px solid #26365a;margin-bottom:18px}
+.brand b{display:block;font:800 .95rem var(--head);color:#fff;letter-spacing:.2px}
+.brand span{font-size:.85rem;color:#93C5FD}
+.nav{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;margin-bottom:4px;background:none;border:0;border-radius:12px;color:#cbd5e1;cursor:pointer;font-weight:600;transition:background .2s,color .2s}
+.nav:hover{background:#1f3158;color:#fff}
+.nav.on{background:var(--blue);color:#fff}
+.nav.last{margin-top:auto;color:#94a3b8}
+
+/* top bar */
+.main{flex:1;min-width:0}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+.top h1{font-size:1.25rem}
+#burger{display:none;border:0;background:none;font-size:1.5rem;cursor:pointer;color:var(--navy)}
+.content{padding:28px;max-width:1040px}
+
+/* hero banner */
+.hero{background:var(--navy);border-radius:16px;padding:32px;margin-bottom:22px}
+.hero h2{color:#fff;font-size:clamp(1.4rem,3.5vw,1.9rem);margin-bottom:8px}
+.hero p{color:#cbd5e1;max-width:52ch;margin-bottom:20px}
+
+/* cards */
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:22px}
+.panel h2{font-size:1.1rem;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px}
+.stat:hover{border-color:var(--blue)}
+.stat .bub{width:46px;height:46px;border-radius:50%;background:#EFF6FF;color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat b{display:block;font:800 1.7rem var(--head);color:var(--navy);line-height:1.1}
+.stat span{color:var(--muted);font-size:.92rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.item{border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px;overflow-wrap:anywhere;background:#fff}
+.item:hover{border-color:var(--blue)}
+.item b{font-family:var(--head);color:var(--navy);font-size:1rem}
+.item img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;border-radius:10px;background:var(--line)}
+.item small{color:var(--muted)}
+.tag{align-self:flex-start;background:#EFF6FF;color:#1D4ED8;border-radius:999px;padding:2px 12px;font-size:.8rem;font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+/* forms */
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:var(--navy)}
+.fg{margin-bottom:16px}
+input,textarea,select{width:100%;padding:12px 14px;border:1px solid #CBD5E1;border-radius:10px;background:#fff;color:var(--text)}
+input:focus,textarea:focus,select:focus{outline:3px solid #BFDBFE;border-color:var(--blue)}
+textarea{min-height:96px;resize:vertical}
+.hint{font-size:.85rem;color:var(--muted);margin-top:5px}
+.btn{padding:11px 22px;border:2px solid var(--blue);border-radius:999px;background:var(--blue);color:#fff;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,color .2s}
+.btn:hover{background:#2563EB;border-color:#2563EB}
+.btn.s{background:transparent;color:var(--blue)}
+.btn.s:hover{background:var(--blue);color:#fff}
+.btn.d{background:transparent;color:var(--red);border-color:#FECACA}
+.btn.d:hover{background:var(--red);border-color:var(--red);color:#fff}
+.btn.sm{padding:6px 14px;font-size:.85rem}
+.btn.light{background:transparent;color:#fff;border-color:#fff}
+.btn.light:hover{background:#fff;color:var(--navy)}
+.sec{display:none}.sec.on{display:block}
+.note{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E3A8A;border-radius:12px;padding:14px 16px;font-size:.93rem;margin-bottom:22px}
+ol{margin-left:20px}ol li{margin-bottom:8px}
+code{background:#EFF6FF;color:#1D4ED8;padding:1px 6px;border-radius:6px;font-size:.88em}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-radius:999px;font-size:.92rem;display:none;z-index:20;max-width:90vw}
+#toast.err{background:var(--red)}
+#code{font-family:Consolas,monospace;font-size:.8rem;min-height:280px;white-space:pre;background:var(--navy);color:#E2E8F0;border:0;border-radius:12px}
+
+@media(max-width:760px){
+.side{display:none;position:fixed;inset:0 auto 0 0;width:260px;z-index:15;box-shadow:0 0 0 100vmax rgba(20,33,61,.5)}
+.side.open{display:flex}
+#burger{display:block}
+.stats,.grid{grid-template-columns:1fr}
+.content{padding:16px}
+.top{padding:14px 16px}
+.hero{padding:24px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+ <aside class="side" id="side">
+  <div class="brand"><b>DAVID TECH AND DESIGN</b><span>Design That Speaks.</span></div>
+  <button class="nav on" data-p="dash"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+  <button class="nav" data-p="projects"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>Portfolio Projects</button>
+  <button class="nav" data-p="services"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20l8-8-4-4-8 8v4z"/><path d="M14 6l4 4"/></svg>Services</button>
+  <button class="nav" data-p="settings"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H8l-4 4z"/></svg>Contact Settings</button>
+  <button class="nav" data-p="export"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>Export to Website</button>
+  <button class="nav last" id="reset"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6M4 4v5h5"/></svg>Reset to Defaults</button>
+ </aside>
+ <div class="main">
+  <header class="top"><button id="burger" aria-label="Menu">&#9776;</button><h1 id="title">Dashboard</h1></header>
+  <div class="content">
+
+   <section class="sec on" id="dash">
+    <div class="hero">
+     <h2>Welcome back</h2>
+     <p>Manage the projects, services and contact details shown on your website.</p>
+     <button class="btn light" data-go="projects">Add a project</button>
+    </div>
+    <div class="stats">
+     <div class="stat"><div class="bub"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div><div><b id="cP">0</b><span>Portfolio projects</span></div></div>
+     <div class="stat"><div class="bub"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20l8-8-4-4-8 8v4z"/><path d="M14 6l4 4"/></svg></div><div><b id="cS">0</b><span>Services</span></div></div>
+     <div class="stat"><div class="bub"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><div><b id="cW">0</b><span>Website projects</span></div></div>
+    </div>
+    <div class="note"><b>How this works:</b> changes are saved in this browser only. They reach your live website after you export them and paste them into <code>index.html</code>.</div>
+    <div class="panel"><h2>Update your website in 4 steps</h2>
+     <ol><li>Add or edit projects, services and contact details here.</li>
+     <li>Open <b>Export to Website</b> and tap <b>Copy code</b>.</li>
+     <li>In <code>index.html</code>, replace everything from the line <code>EDIT YOUR DETAILS HERE</code> to the closing <code>/* ===== */</code> line.</li>
+     <li>Upload the updated <code>index.html</code> (and any downloaded images in an <code>images</code> folder) to your host.</li></ol>
+    </div>
+   </section>
+
+   <section class="sec" id="projects">
+    <div class="panel"><h2 id="pHead">Add Portfolio Project</h2>
+     <form id="pForm">
+      <div class="fg"><label for="pTitle">Project name</label><input id="pTitle" required maxlength="80"></div>
+      <div class="fg"><label for="pCat">Category</label>
+       <select id="pCat"><option>Websites</option><option>Graphic Design</option><option>Video Editing</option></select></div>
+      <div class="fg"><label for="pDesc">Short description</label><textarea id="pDesc" maxlength="200"></textarea></div>
+      <div class="fg"><label for="pUrl">Live website link (optional)</label><input id="pUrl" type="url" placeholder="https://example.com"></div>
+      <div class="fg"><label for="pFile">Preview image (optional)</label><input id="pFile" type="file" accept="image/*">
+       <p class="hint">Any size. It is resized to 800px wide. Leave empty to use an automatic screenshot of the link.</p>
+       <div class="fg" style="margin-top:12px"><label for="pPath">Or image file path</label><input id="pPath" placeholder="images/my-project.jpg"></div>
+       <img id="pPrev" alt="Selected preview" style="display:none;max-width:260px;border-radius:12px;margin-top:6px"></div>
+      <div class="row"><button class="btn" type="submit" id="pSave">Add Project</button><button class="btn s" type="button" id="pCancel" style="display:none">Cancel</button></div>
+     </form>
+    </div>
+    <div class="panel"><h2>Your Projects</h2><div class="grid" id="pList"></div></div>
+   </section>
+
+   <section class="sec" id="services">
+    <div class="panel"><h2 id="sHead">Add Service</h2>
+     <form id="sForm">
+      <div class="fg"><label for="sName">Service name</label><input id="sName" required maxlength="60"></div>
+      <div class="fg"><label for="sDesc">Description</label><textarea id="sDesc" required maxlength="250"></textarea></div>
+      <div class="fg"><label for="sItems">What it includes (one per line)</label><textarea id="sItems"></textarea></div>
+      <div class="fg"><label for="sIcon">Icon</label>
+       <select id="sIcon"><option value="website">Website</option><option value="graphic">Pen</option><option value="video">Video</option><option value="document">Document</option><option value="print">Printer</option></select></div>
+      <div class="row"><button class="btn" type="submit" id="sSave">Add Service</button><button class="btn s" type="button" id="sCancel" style="display:none">Cancel</button></div>
+     </form>
+    </div>
+    <div class="panel"><h2>Your Services</h2><div class="grid" id="sList"></div></div>
+   </section>
+
+   <section class="sec" id="settings">
+    <div class="panel"><h2>Contact Settings</h2>
+     <form id="cForm">
+      <div class="fg"><label for="cWa">WhatsApp number</label><input id="cWa" inputmode="numeric" required><p class="hint">International format, digits only, no + or leading 0. Example: 2348100133172</p></div>
+      <div class="fg"><label for="cPh">Phone numbers (separate with commas)</label><input id="cPh"></div>
+      <div class="fg"><label for="cEm">Email</label><input id="cEm" type="email"></div>
+      <div class="fg"><label for="cIg">Instagram username</label><input id="cIg"></div>
+      <div class="fg"><label for="cIgU">Instagram link</label><input id="cIgU" type="url"></div>
+      <div class="fg"><label for="cFb">Facebook name</label><input id="cFb"></div>
+      <div class="fg"><label for="cFbU">Facebook page link</label><input id="cFbU" type="url" placeholder="https://facebook.com/yourpage"></div>
+      <button class="btn" type="submit">Save Settings</button>
+     </form>
+    </div>
+   </section>
+
+   <section class="sec" id="export">
+    <div class="panel"><h2>Export to Website</h2>
+     <p style="margin-bottom:14px">This is the code for your website's editable section. Copy it into <code>index.html</code> as described on the Dashboard.</p>
+     <textarea id="code" readonly></textarea>
+     <div class="row" style="margin-top:14px"><button class="btn" id="copy">Copy code</button></div>
+     <p class="hint" style="margin-top:12px">Uploaded images are listed as <code>images/project-name.jpg</code>. Use <b>Download image</b> on each project and put the file in an <code>images</code> folder next to <code>index.html</code>.</p>
+    </div>
+   </section>
+
+  </div>
+ </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const KEY = "dtdAdminData";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "project";
+
+/* Same icons as the public website */
+const ICONS = {
+  website:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/>',
+  graphic:'<path d="M12 20l8-8-4-4-8 8v4z"/><path d="M14 6l4 4"/>',
+  video:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>',
+  document:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
+  print:'<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>'
+};
+const WHY = [
+  ["Creative Approach","Thoughtful designs tailored to your needs."],
+  ["Professional Presentation","Solutions designed to present your business effectively."],
+  ["Attention to Detail","Careful consideration of layout, clarity, and quality."],
+  ["Client-Focused Service","Clear communication and solutions suited to your requirements."]
+];
+const DEFAULTS = {
+  next: 20,
+  settings:{whatsapp:"2348100133172",phones:["08100133172","08123998568"],email:"davidtechanddesigns@gmail.com",instagram:"dtd017",instagramUrl:"https://instagram.com/dtd017",facebook:"Davud Designs",facebookUrl:""},
+  services:[
+   {id:1,icon:"website",name:"Website Design",desc:"We design modern, responsive websites that help businesses showcase their services and establish a professional online presence.",items:["Business websites","Restaurant and hotel websites","School websites","E-commerce websites","Website redesign","And much more..."]},
+   {id:2,icon:"graphic",name:"Graphic Design",desc:"Eye-catching designs that give your brand a clear and professional look.",items:["Logos","Flyers and posters","Brand materials"]},
+   {id:3,icon:"video",name:"Video Editing",desc:"We transform raw footage into engaging videos that communicate your message and capture attention.",items:["Promotional videos","Event and conference videos","Business advertisement videos","Social media video content","Cinematic video editing"]},
+   {id:4,icon:"document",name:"Typing and Document Services",desc:"We help individuals and businesses prepare clear, properly arranged, and professionally formatted documents.",items:["Document typing","Document formatting","Professional document arrangement"]},
+   {id:5,icon:"print",name:"Printing Services",desc:"Printing solutions for documents and other suitable materials, with attention to clarity and presentation.",items:[]}
+  ],
+  projects:[
+   {id:11,title:"De-Joe Hotel & Resort",cat:"Websites",url:"https://dejoehotelresort.unuayonkheafebuameh.workers.dev/",image:"",desc:"Website design project for a hotel and resort."},
+   {id:12,title:"Castillo Kitchen",cat:"Websites",url:"https://castillo-kitchen-connectt.preciouajosh.workers.dev/",image:"",desc:"Website design project for a restaurant."},
+   {id:13,title:"Islah Kitchen",cat:"Websites",url:"https://islah-kitchen-web.unuayonkheafebuameh.workers.dev/",image:"",desc:"Website design project for a kitchen business."},
+   {id:14,title:"MJ Essentials Hub",cat:"Websites",url:"https://mj-essentials-hub.preciouajosh.workers.dev/",image:"",desc:"E-commerce style website design project."},
+   {id:15,title:"Pixel Match Studio",cat:"Websites",url:"https://pixel-match-studio-17.lovable.app/",image:"",desc:"Website design project for a creative studio."}
+  ]
+};
+const clone = o => JSON.parse(JSON.stringify(o));
+function load(){
+  try { const s = localStorage.getItem(KEY); if (s) return {...clone(DEFAULTS), ...JSON.parse(s)}; } catch(e){}
+  return clone(DEFAULTS);
+}
+let data = load();
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(data)); return true; }
+  catch(e){ toast("Could not save. Browser storage is full or blocked. Try a smaller image.", true); return false; }
+}
+let tt;
+function toast(msg, err){
+  const t = $("toast"); t.textContent = msg; t.className = err ? "err" : ""; t.style.display = "block";
+  clearTimeout(tt); tt = setTimeout(() => t.style.display = "none", 3200);
+}
+
+/* Navigation */
+const TITLES = {dash:"Dashboard",projects:"Portfolio Projects",services:"Services",settings:"Contact Settings",export:"Export to Website"};
+function show(p){
+  document.querySelectorAll(".sec").forEach(s => s.classList.toggle("on", s.id === p));
+  document.querySelectorAll(".nav[data-p]").forEach(b => b.classList.toggle("on", b.dataset.p === p));
+  $("title").textContent = TITLES[p]; $("side").classList.remove("open");
+  render(); scrollTo(0,0);
+}
+document.querySelectorAll(".nav[data-p]").forEach(b => b.addEventListener("click", () => show(b.dataset.p)));
+document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => show(b.dataset.go)));
+$("burger").addEventListener("click", () => $("side").classList.toggle("open"));
+
+/* Render */
+function render(){
+  $("cP").textContent = data.projects.length;
+  $("cS").textContent = data.services.length;
+  $("cW").textContent = data.projects.filter(p => p.cat === "Websites").length;
+
+  $("pList").innerHTML = data.projects.length ? data.projects.map(p => `
+   <div class="item">
+    ${p.image ? `<img src="${esc(p.image)}" alt="Preview of ${esc(p.title)}">` : ""}
+    <span class="tag">${esc(p.cat)}</span>
+    <b>${esc(p.title)}</b><span>${esc(p.desc)}</span>
+    ${p.url ? `<small>${esc(p.url)}</small>` : ""}
+    <div class="row">
+     <button class="btn sm s" data-a="pe" data-id="${p.id}">Edit</button>
+     ${p.image.startsWith("data:") ? `<a class="btn sm s" href="${p.image}" download="${slug(p.title)}.jpg">Download image</a>` : ""}
+     <button class="btn sm d" data-a="pd" data-id="${p.id}">Delete</button>
+    </div></div>`).join("") : '<p class="hint">No projects yet.</p>';
+
+  $("sList").innerHTML = data.services.length ? data.services.map(s => `
+   <div class="item"><b>${esc(s.name)}</b><span>${esc(s.desc)}</span>
+    ${s.items.length ? `<small>${s.items.map(esc).join(" · ")}</small>` : ""}
+    <div class="row">
+     <button class="btn sm s" data-a="se" data-id="${s.id}">Edit</button>
+     <button class="btn sm d" data-a="sd" data-id="${s.id}">Delete</button>
+    </div></div>`).join("") : '<p class="hint">No services yet.</p>';
+
+  const c = data.settings;
+  $("cWa").value = c.whatsapp; $("cPh").value = c.phones.join(", "); $("cEm").value = c.email;
+  $("cIg").value = c.instagram; $("cIgU").value = c.instagramUrl; $("cFb").value = c.facebook; $("cFbU").value = c.facebookUrl;
+  $("code").value = exportCode();
+}
+
+/* Projects */
+let editP = null;
+const resize = f => new Promise((ok, bad) => {
+  const r = new FileReader(); r.onerror = bad;
+  r.onload = () => { const i = new Image(); i.onerror = bad;
+    i.onload = () => { const w = Math.min(800, i.width), h = Math.round(i.height * w / i.width);
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(i, 0, 0, w, h); ok(c.toDataURL("image/jpeg", .8)); };
+    i.src = r.result; };
+  r.readAsDataURL(f);
+});
+$("pFile").addEventListener("change", async () => {
+  const f = $("pFile").files[0], img = $("pPrev");
+  if (!f) { img.style.display = "none"; return; }
+  if (!f.type.startsWith("image/")) { toast("Please choose an image file.", true); $("pFile").value = ""; return; }
+  try { img.src = await resize(f); img.style.display = "block"; } catch(e){ toast("Could not read that image.", true); }
+});
+function resetP(){
+  editP = null; $("pForm").reset(); $("pPrev").style.display = "none";
+  $("pHead").textContent = "Add Portfolio Project"; $("pSave").textContent = "Add Project"; $("pCancel").style.display = "none";
+}
+$("pCancel").addEventListener("click", resetP);
+$("pForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const old = editP ? data.projects.find(p => p.id === editP) : null;
+  const p = {id: old ? old.id : data.next++, title:$("pTitle").value.trim(), cat:$("pCat").value,
+             desc:$("pDesc").value.trim(), url:$("pUrl").value.trim(), image: old ? old.image : ""};
+  if (!p.title) return toast("Please enter a project name.", true);
+  const f = $("pFile").files[0], path = $("pPath").value.trim();
+  if (f) { try { p.image = await resize(f); } catch(err){ return toast("Could not read that image.", true); } }
+  else if (path) p.image = path;
+  if (old) data.projects[data.projects.indexOf(old)] = p; else data.projects.push(p);
+  if (save()) { toast(old ? "Project updated." : "Project added."); resetP(); render(); }
+});
+
+/* Services */
+let editS = null;
+function resetS(){
+  editS = null; $("sForm").reset();
+  $("sHead").textContent = "Add Service"; $("sSave").textContent = "Add Service"; $("sCancel").style.display = "none";
+}
+$("sCancel").addEventListener("click", resetS);
+$("sForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const s = {id: editS || data.next++, name:$("sName").value.trim(), desc:$("sDesc").value.trim(),
+             items:$("sItems").value.split("\n").map(x => x.trim()).filter(Boolean), icon:$("sIcon").value};
+  if (!s.name || !s.desc) return toast("Please enter a name and description.", true);
+  const i = data.services.findIndex(x => x.id === s.id);
+  if (i > -1) data.services[i] = s; else data.services.push(s);
+  if (save()) { toast(i > -1 ? "Service updated." : "Service added."); resetS(); render(); }
+});
+
+/* Edit / delete (shared handler) */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-a]"); if (!b) return;
+  const id = +b.dataset.id, a = b.dataset.a;
+  if (a === "pe") {
+    const p = data.projects.find(x => x.id === id); editP = id;
+    $("pTitle").value = p.title; $("pCat").value = p.cat; $("pDesc").value = p.desc; $("pUrl").value = p.url;
+    $("pPath").value = p.image.startsWith("data:") ? "" : p.image; $("pFile").value = "";
+    if (p.image) { $("pPrev").src = p.image; $("pPrev").style.display = "block"; }
+    $("pHead").textContent = "Edit Project"; $("pSave").textContent = "Save Changes"; $("pCancel").style.display = "";
+    scrollTo({top:0, behavior:"smooth"});
+  } else if (a === "pd") {
+    if (confirm("Delete this project?")) { data.projects = data.projects.filter(x => x.id !== id); save(); render(); }
+  } else if (a === "se") {
+    const s = data.services.find(x => x.id === id); editS = id;
+    $("sName").value = s.name; $("sDesc").value = s.desc; $("sItems").value = s.items.join("\n"); $("sIcon").value = s.icon;
+    $("sHead").textContent = "Edit Service"; $("sSave").textContent = "Save Changes"; $("sCancel").style.display = "";
+    scrollTo({top:0, behavior:"smooth"});
+  } else if (a === "sd") {
+    if (confirm("Delete this service?")) { data.services = data.services.filter(x => x.id !== id); save(); render(); }
+  }
+});
+
+/* Settings */
+$("cForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const wa = $("cWa").value.trim();
+  if (!/^[1-9]\d{9,14}$/.test(wa)) return toast("WhatsApp must be digits only, with country code and no leading 0.", true);
+  data.settings = {whatsapp:wa, phones:$("cPh").value.split(",").map(x => x.trim()).filter(Boolean),
+    email:$("cEm").value.trim(), instagram:$("cIg").value.trim().replace(/^@/, ""), instagramUrl:$("cIgU").value.trim(),
+    facebook:$("cFb").value.trim(), facebookUrl:$("cFbU").value.trim()};
+  if (save()) toast("Settings saved.");
+});
+
+/* Export: produces the exact block used in index.html */
+function exportCode(){
+  const svc = data.services.map(s => ({name:s.name, icon:ICONS[s.icon] || ICONS.website, desc:s.desc, items:s.items}));
+  const prj = data.projects.map(p => ({title:p.title, cat:p.cat, url:p.url,
+    image: p.image.startsWith("data:") ? `images/${slug(p.title)}.jpg` : p.image, desc:p.desc}));
+  const J = o => JSON.stringify(o, null, 2);
+  return `/* ============ EDIT YOUR DETAILS HERE ============ */\nconst CONFIG = ${J(data.settings)};\n\nconst SERVICES = ${J(svc)};\n\nconst PROJECTS = ${J(prj)};\n\nconst WHY = ${J(WHY)};\n/* ================================================= */`;
+}
+$("copy").addEventListener("click", async () => {
+  const t = $("code"); t.value = exportCode();
+  try { await navigator.clipboard.writeText(t.value); toast("Code copied."); }
+  catch(e){ t.select(); document.execCommand("copy"); toast("Code copied."); }
+});
+
+$("reset").addEventListener("click", () => {
+  if (confirm("Reset everything to the original website content? Your changes here will be lost.")) {
+    data = clone(DEFAULTS); save(); resetP(); resetS(); render(); toast("Reset done.");
+  }
+});
+render();
+</script>
+</body>
+</html>
