@@ -487,34 +487,5 @@ sb.auth.onAuthStateChange((ev, s) => {
   setTimeout(() => gate(s), 0);
 });
 </script>
- /* ===== Load live content from Supabase ===== */
-const SB_URL = "https://fdzumtilumzxdhoeoata.supabase.co";
-const SB_KEY = "sb_publishable_SMfBIcdmnxEdjTIMOQ_3QA_j_ihDk8_";
-const SB_ICONS = {
-  website:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/>',
-  graphic:'<path d="M12 20l8-8-4-4-8 8v4z"/><path d="M14 6l4 4"/>',
-  video:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>',
-  document:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
-  print:'<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>'
-};
-async function sbGet(table){
-  const r = await fetch(`${SB_URL}/rest/v1/${table}?select=*&order=created_at.asc`, {headers:{apikey:SB_KEY}});
-  if (!r.ok) throw new Error(table);
-  return r.json();
-}
-async function loadData(){
-  try {
-    const [p, s, c] = await Promise.all([sbGet("projects"), sbGet("services"), sbGet("site_settings")]);
-    if (p.length) PROJECTS.splice(0, PROJECTS.length, ...p.map(r => ({title:r.title, cat:r.category || "Websites", url:r.project_url || "", image:r.image_url || "", desc:r.description || ""})));
-    if (s.length) SERVICES.splice(0, SERVICES.length, ...s.map(r => ({name:r.title, icon:SB_ICONS[r.icon] || SB_ICONS.website, desc:r.description || "", items:Array.isArray(r.items) ? r.items : []})));
-    c.forEach(r => {
-      if (!(r.setting_key in CONFIG)) return;
-      const v = String(r.setting_value ?? "");
-      CONFIG[r.setting_key] = r.setting_key === "phones" ? v.split(",").map(x => x.trim()).filter(Boolean) : v;
-    });
-  } catch (e) { console.warn("Using built-in content", e); }
-}
-
-async function startSite(){
 </body>
 </html>
