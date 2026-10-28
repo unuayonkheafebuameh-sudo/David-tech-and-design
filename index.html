@@ -269,7 +269,8 @@ const SB_ICONS = {
   print:'<path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/>'
 };
 async function sbGet(table){
-  const r = await fetch(`${SB_URL}/rest/v1/${table}?select=*&order=created_at.asc`, {headers:{apikey:SB_KEY}});
+  const order = table === "site_settings" ? "" : "&order=created_at.asc";
+  const r = await fetch(`${SB_URL}/rest/v1/${table}?select=*${order}`, {headers:{apikey:SB_KEY}});
   if (!r.ok) throw new Error(table);
   return r.json();
 }
