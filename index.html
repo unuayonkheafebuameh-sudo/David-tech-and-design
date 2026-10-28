@@ -283,7 +283,7 @@ async function loadData(){
       const v = String(r.setting_value ?? "");
       CONFIG[r.setting_key] = r.setting_key === "phones" ? v.split(",").map(x => x.trim()).filter(Boolean) : v;
     });
-  } catch (e) { console.warn("Using built-in content", e); }
+  } catch (e) { document.body.insertAdjacentHTML("afterbegin", '<p style="background:#FEE2E2;color:#7F1D1D;padding:8px;text-align:center">Data error: ' + e.message + '</p>'); }
 }
 
 async function startSite(){
