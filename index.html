@@ -280,6 +280,8 @@ async function loadData(){
     if (p.length) PROJECTS.splice(0, PROJECTS.length, ...p.map(r => ({title:r.title, cat:r.category || "Websites", url:r.project_url || "", image:r.image_url || "", desc:r.description || ""})));
     if (s.length) SERVICES.splice(0, SERVICES.length, ...s.map(r => ({name:r.title, icon:SB_ICONS[r.icon] || SB_ICONS.website, desc:r.description || "", items:Array.isArray(r.items) ? r.items : []})));
     c.forEach(r => {
+     if (r.setting_key === "logo_url") { window.SITE_LOGO = String(r.setting_value || ""); return; }
+      if (r.setting_key === "logo_show_name") { window.SITE_LOGO_NAME = String(r.setting_value) !== "false"; return; }
       if (!(r.setting_key in CONFIG)) return;
       const v = String(r.setting_value ?? "");
       CONFIG[r.setting_key] = r.setting_key === "phones" ? v.split(",").map(x => x.trim()).filter(Boolean) : v;
