@@ -221,4 +221,74 @@ async function enter(u){
  activeUser=u;$('loginScreen').classList.add('hidden');$('dashboard').classList.remove('hidden');$('signedIn').textContent=u.email||'Administrator';loadAll()}
 try{const c=JSON.parse(localStorage.getItem('daiStudioAdminConfig')||'null');if(c){$('sbUrl').value=c.url||'';$('sbKey').value=c.key||''}}catch{}
 try{if($('sbUrl').value&&$('sbKey').value){initClient();client.auth.getSession().then(({data})=>{if(data?.session?.user)enter(data.session.user).catch(e=>notify(e.message,true))})}}catch{}
+/* ===== Logo ===== */
+$("settings").insertAdjacentHTML("afterbegin", `
+<div class="panel"><h2>Website Logo</h2>
+ <div id="lCur" style="margin-bottom:16px"></div>
+ <form id="lForm">
+  <div class="fg"><label for="lFile">Upload a new logo</label><input id="lFile" type="file" accept="image/png,image/jpeg,image/webp">
+   <p class="hint">A PNG with a transparent background works best. It shows on a navy background, so use a light or white version if your logo is dark. It is resized to 500px wide.</p></div>
+  <div class="fg"><label><input id="lName" type="checkbox" checked style="width:auto;margin-right:8px">Show the business name next to the logo</label></div>
+  <div class="row"><button class="btn" type="submit">Save Logo</button><button class="btn d" type="button" id="lRemove" style="display:none">Remove Logo</button></div>
+ </form>
+</div>`);
+async function putSetting(k, v){
+  const ex = ok(await sb.from("site_settings").select("id").eq("setting_key", k));
+  if (ex.length) ok(await sb.from("site_settings").update({setting_value:v, updated_at:new Date().toISOString()}).eq("id", ex[0].id));
+  else ok(await sb.from("site_settings").insert({setting_key:k, setting_value:v}));
+}
+function renderLogo(){
+  $("lCur").innerHTML = data.logo
+    ? `<img src="${esc(data.logo)}" alt="Current logo" style="max-height:80px;max-width:100%;background:#14213D;padding:10px;border-radius:10px">`
+    : '<p class="hint">No logo yet. Your website shows the business name as text.</p>';
+  $("lName").checked = data.logoName !== false;
+  $("lRemove").style.display = data.logo ? "" : "none";
+}
+async function loadLogo(){
+  try {
+    const rows = ok(await sb.from("site_settings").select("*").in("setting_key", ["logo_url", "logo_show_name"]));
+    data.logo = ""; data.logoName = true;
+    rows.forEach(r => {
+      if (r.setting_key === "logo_url") data.logo = String(r.setting_value || "");
+      else data.logoName = String(r.setting_value) !== "false";
+    });
+  } catch(e){ toast(e.message || "Could not load the logo.", true); }
+  renderLogo();
+}
+const logoBlob = f => new Promise((res, rej) => {
+  const i = new Image();
+  i.onerror = () => rej(new Error("Could not read that image."));
+  i.onload = () => {
+    const w = Math.min(500, i.width), h = Math.round(i.height * w / i.width), c = document.createElement("canvas");
+    c.width = w; c.height = h; c.getContext("2d").drawImage(i, 0, 0, w, h); URL.revokeObjectURL(i.src);
+    c.toBlob(b => b ? res(b) : rej(new Error("Could not process that image.")), "image/png");
+  };
+  i.src = URL.createObjectURL(f);
+});
+$("lForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = $("lFile").files[0], showName = $("lName").checked;
+  if (f && !f.type.startsWith("image/")) return toast("Please choose an image file.", true);
+  await run(async () => {
+    if (f) {
+      const blob = await logoBlob(f), path = `logo/logo-${Date.now()}.png`;
+      ok(await sb.storage.from(BUCKET).upload(path, blob, {contentType:"image/png", upsert:false}));
+      const url = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl, old = data.logo;
+      await putSetting("logo_url", url);
+      data.logo = url;
+      if (old) await removeImg(old);
+    }
+    await putSetting("logo_show_name", String(showName));
+    data.logoName = showName;
+    renderLogo();
+  }, "Logo saved.");
+  $("lFile").value = "";
+});
+$("lRemove").addEventListener("click", async () => {
+  if (!data.logo || !confirm("Remove the logo from your website?")) return;
+  const old = data.logo;
+  await run(async () => { await putSetting("logo_url", ""); data.logo = ""; await removeImg(old); renderLogo(); }, "Logo removed.");
+});
+const _refresh = refresh;
+refresh = async () => { await _refresh(); await loadLogo(); };
 </script></body></html>
